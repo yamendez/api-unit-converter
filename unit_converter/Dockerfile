@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the application code
 COPY . .
 
+# Grant execute permissions to the mvnw script
+RUN chmod +x ./mvnw
+
 # Build the application (requires Maven or Gradle)
 RUN ./mvnw clean -DskipTests
 
@@ -22,3 +25,5 @@ COPY --from=builder /app/target/*.jar app.jar
 # Expose port the port the app will run on
 EXPOSE 8080
 
+# Command to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
